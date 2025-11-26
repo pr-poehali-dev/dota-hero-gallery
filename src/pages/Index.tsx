@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
@@ -8,248 +7,211 @@ interface Hero {
   name: string;
   title: string;
   role: string;
-  attribute: string;
+  difficulty: string;
   image: string;
   description: string;
-  abilities: string[];
+  lore: string;
 }
 
 const heroes: Hero[] = [
   {
     id: 1,
-    name: 'Invoker',
-    title: 'Арсенал Магии',
-    role: 'Маг / Carry',
-    attribute: 'Intelligence',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/c9b840c3-2d5f-4d49-9cfa-6ac8ec62059d.jpg',
-    description: 'Мастер магических искусств, способный призывать 10 различных заклинаний, комбинируя три стихии: огонь, лёд и молнию.',
-    abilities: ['Cold Snap', 'Ghost Walk', 'Tornado', 'EMP']
+    name: 'Shadow Fiend',
+    title: 'Демон Душ',
+    role: 'Carry',
+    difficulty: 'Высокая',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/63f53cfe-d69b-464f-ba5d-a2e65c995055.jpg',
+    description: 'Могущественный демон, собирающий души павших врагов для увеличения своей силы.',
+    lore: 'Вырвавшись из преисподней, Shadow Fiend охотится за душами смертных. Каждая собранная душа усиливает его тёмную мощь.'
   },
   {
     id: 2,
-    name: 'Pudge',
-    title: 'Мясник',
-    role: 'Tank / Ganker',
-    attribute: 'Strength',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/bfa0d6ab-1ae0-4514-bded-3d124614355a.jpg',
-    description: 'Жуткий мясник с крюком, который может подтянуть врагов и разорвать их на части своей силой и гниющей плотью.',
-    abilities: ['Meat Hook', 'Rot', 'Flesh Heap', 'Dismember']
+    name: 'Mirana',
+    title: 'Принцесса Луны',
+    role: 'Support / Carry',
+    difficulty: 'Средняя',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/820fda3d-1b71-4e28-9f35-f37b3c96c280.jpg',
+    description: 'Элегантная наездница на белом тигре, использующая силу лунного света в бою.',
+    lore: 'Mirana, принцесса Луны, вместе со своим верным спутником Sagan несёт правосудие под покровом ночи.'
   },
   {
     id: 3,
-    name: 'Crystal Maiden',
-    title: 'Ледяная Дева',
-    role: 'Support / Disabler',
-    attribute: 'Intelligence',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/7c56d68c-1bf3-4308-9368-5209550fcf68.jpg',
-    description: 'Повелительница льда и холода, способная замораживать врагов и обрушивать на них снежные бури невероятной мощи.',
-    abilities: ['Crystal Nova', 'Frostbite', 'Arcane Aura', 'Freezing Field']
+    name: 'Templar Assassin',
+    title: 'Хранительница Тайн',
+    role: 'Carry',
+    difficulty: 'Средняя',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/694415ac-5480-48e5-9d76-6f532314c142.jpg',
+    description: 'Таинственная убийца, владеющая псионическими клинками и техниками сокрытия.',
+    lore: 'Lanaya защищает древние секреты Тайного Храма, безжалостно устраняя всех, кто угрожает её тайнам.'
   },
   {
     id: 4,
-    name: 'Anti-Mage',
-    title: 'Охотник на Магов',
-    role: 'Carry / Escape',
-    attribute: 'Agility',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/a494da51-940d-4e94-a3ec-8cda481835d5.jpg',
-    description: 'Молниеносный воин, посвятивший жизнь уничтожению магии. Его клинки сжигают ману врагов, превращая их силу в их же гибель.',
-    abilities: ['Mana Break', 'Blink', 'Counterspell', 'Mana Void']
+    name: 'Storm Spirit',
+    title: 'Дух Бури',
+    role: 'Carry / Nuker',
+    difficulty: 'Высокая',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/d10972d1-b20e-4dcc-ad5f-94fac9817315.jpg',
+    description: 'Электрический элементаль, способный превращаться в молнию и перемещаться по полю боя.',
+    lore: 'Некогда смертный монах, теперь Storm Spirit - воплощение чистой электрической энергии с озорным характером.'
   },
   {
     id: 5,
-    name: 'Earthshaker',
-    title: 'Сотрясатель Земли',
-    role: 'Initiator / Disabler',
-    attribute: 'Strength',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/cf82ba4d-457c-4abb-8649-1d179ca55ab7.jpg',
-    description: 'Могучий воин стихий, способный сотрясать землю и создавать непроходимые барьеры, сокрушая всех врагов одним ударом.',
-    abilities: ['Fissure', 'Enchant Totem', 'Aftershock', 'Echo Slam']
-  },
-  {
-    id: 6,
-    name: 'Phantom Assassin',
-    title: 'Призрачная Убийца',
-    role: 'Carry / Assassin',
-    attribute: 'Agility',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/10ce9bde-75c9-4452-9904-5b79bfbbec29.jpg',
-    description: 'Неуловимая убийца в синем одеянии, наносящая критические удары с невероятной скоростью. Её клинки приносят мгновенную смерть.',
-    abilities: ['Stifling Dagger', 'Phantom Strike', 'Blur', 'Coup de Grace']
-  },
-  {
-    id: 7,
-    name: 'Juggernaut',
-    title: 'Неудержимый Воин',
-    role: 'Carry / Pusher',
-    attribute: 'Agility',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/9cd7c266-edbe-46e1-aa21-358b36792c3e.jpg',
-    description: 'Неукротимый мечник в маске, способный стать неуязвимым и превратиться в вихрь клинков, разрубающий всё на своём пути.',
-    abilities: ['Blade Fury', 'Healing Ward', 'Blade Dance', 'Omnislash']
-  },
-  {
-    id: 8,
-    name: 'Sniper',
-    title: 'Меткий Стрелок',
-    role: 'Carry / Nuker',
-    attribute: 'Agility',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/e9bfcfe1-85c0-49be-bc3f-8c6c388c0c0c.jpg',
-    description: 'Дварф-снайпер с дальнобойным ружьём, способный поражать врагов с огромного расстояния, оставаясь вне зоны досягаемости.',
-    abilities: ['Shrapnel', 'Headshot', 'Take Aim', 'Assassinate']
-  },
-  {
-    id: 9,
-    name: 'Lina',
-    title: 'Повелительница Огня',
-    role: 'Nuker / Support',
-    attribute: 'Intelligence',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/957111b3-c8cd-483f-9295-69d7835c9bec.jpg',
-    description: 'Огненная волшебница с пылающими волосами, способная вызывать молнии и испепелять врагов лучами чистого пламени.',
-    abilities: ['Dragon Slave', 'Light Strike Array', 'Fiery Soul', 'Laguna Blade']
-  },
-  {
-    id: 10,
-    name: 'Axe',
-    title: 'Берсерк',
-    role: 'Initiator / Durable',
-    attribute: 'Strength',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/2fc0be27-4a76-41f9-b6d6-e1f4ae6b4898.jpg',
-    description: 'Безжалостный берсерк с огромным топором, вызывающий врагов на бой и казнящий ослабленных противников одним ударом.',
-    abilities: ['Berserker\'s Call', 'Battle Hunger', 'Counter Helix', 'Culling Blade']
+    name: 'Faceless Void',
+    title: 'Повелитель Времени',
+    role: 'Carry',
+    difficulty: 'Средняя',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/86b7e273-888b-42fe-bf5b-756c155ab3ee.jpg',
+    description: 'Существо вне времени, способное останавливать время и манипулировать темпоральными потоками.',
+    lore: 'Darkterror путешествует между измерениями, исполняя свою загадочную миссию по сохранению временного континуума.'
   }
 ];
 
-const attributeIcons = {
-  Strength: 'Sword',
-  Agility: 'Zap',
-  Intelligence: 'Sparkles'
-};
-
-const attributeColors = {
-  Strength: 'bg-primary/20 text-primary border-primary/30',
-  Agility: 'bg-secondary/20 text-secondary border-secondary/30',
-  Intelligence: 'bg-accent/20 text-accent border-accent/30'
+const difficultyColors = {
+  'Низкая': 'bg-secondary/20 text-secondary border-secondary/50',
+  'Средняя': 'bg-accent/20 text-accent border-accent/50',
+  'Высокая': 'bg-primary/20 text-primary border-primary/50'
 };
 
 const Index = () => {
-  const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen bg-background">
+      <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40 pointer-events-none" />
       
       <div className="relative z-10">
-        <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex items-center gap-3">
-              <Icon name="Gamepad2" size={36} className="text-primary" />
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">DOTA 2 HEROES</h1>
-                <p className="text-muted-foreground text-sm">Легендарные герои арены</p>
+        <header className="border-b border-primary/20 backdrop-blur-xl bg-background/60">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-accent">
+                  <Icon name="Swords" size={32} className="text-white" />
+                </div>
+                <div>
+                  <h1 className="text-5xl font-bold tracking-wider uppercase bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                    DOTA 2
+                  </h1>
+                  <p className="text-muted-foreground text-sm uppercase tracking-widest">Элитные герои арены</p>
+                </div>
               </div>
             </div>
           </div>
         </header>
 
-        <main className="container mx-auto px-4 py-12">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-              Выбери своего героя
+        <main className="container mx-auto px-4 py-16">
+          <section className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-6xl font-bold mb-6 uppercase tracking-tight">
+              <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                Легендарные Бойцы
+              </span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Познакомься с легендарными героями Dota 2. Каждый обладает уникальными способностями и ролью на поле боя.
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Пять величайших героев Dota 2, каждый из которых обладает уникальными способностями 
+              и может изменить ход любой битвы. Познакомьтесь с их историями и силой.
             </p>
-          </div>
+          </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {heroes.map((hero) => (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
+            {heroes.map((hero, index) => (
               <Card
                 key={hero.id}
-                className="group overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 border-2 border-border hover:border-primary/50 bg-card/50 backdrop-blur-sm"
-                onClick={() => setSelectedHero(selectedHero?.id === hero.id ? null : hero)}
+                className={`group relative overflow-hidden transition-all duration-500 hover:scale-[1.02] border-2 bg-card/40 backdrop-blur-sm ${
+                  index === 0 ? 'lg:col-span-2' : ''
+                }`}
+                style={{
+                  borderColor: index % 3 === 0 ? 'hsl(var(--primary))' : index % 3 === 1 ? 'hsl(var(--accent))' : 'hsl(var(--secondary))'
+                }}
               >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={hero.image}
-                    alt={hero.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <Badge
-                      variant="secondary"
-                      className={`${attributeColors[hero.attribute as keyof typeof attributeColors]} border font-semibold`}
-                    >
-                      <Icon name={attributeIcons[hero.attribute as keyof typeof attributeIcons]} size={14} className="mr-1" />
-                      {hero.attribute}
-                    </Badge>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className={`grid ${index === 0 ? 'lg:grid-cols-2' : 'grid-cols-1'} gap-0`}>
+                  <div className={`relative ${index === 0 ? 'h-96' : 'h-72'} overflow-hidden`}>
+                    <img
+                      src={hero.image}
+                      alt={hero.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                    
+                    <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+                      <Badge className="bg-background/90 backdrop-blur-sm border-primary/50 text-primary font-bold uppercase tracking-wide">
+                        #{hero.id}
+                      </Badge>
+                      <Badge 
+                        variant="outline" 
+                        className={`${difficultyColors[hero.difficulty as keyof typeof difficultyColors]} backdrop-blur-sm font-semibold`}
+                      >
+                        <Icon name="TrendingUp" size={14} className="mr-1" />
+                        {hero.difficulty}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-1">{hero.name}</h3>
-                  <p className="text-accent text-sm mb-3 font-medium">{hero.title}</p>
-                  
-                  <Badge variant="outline" className="mb-4">
-                    <Icon name="Target" size={12} className="mr-1" />
-                    {hero.role}
-                  </Badge>
+                  <div className="p-8 flex flex-col justify-center">
+                    <Badge variant="outline" className="w-fit mb-3 border-secondary text-secondary uppercase tracking-wider">
+                      <Icon name="Shield" size={12} className="mr-1" />
+                      {hero.role}
+                    </Badge>
 
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    {hero.description}
-                  </p>
+                    <h3 className="text-4xl font-bold mb-2 uppercase tracking-tight">{hero.name}</h3>
+                    <p className="text-accent text-lg mb-4 font-semibold italic">"{hero.title}"</p>
 
-                  {selectedHero?.id === hero.id && (
-                    <div className="mt-4 pt-4 border-t border-border/50 animate-in fade-in duration-300">
-                      <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
-                        <Icon name="Flame" size={16} className="text-primary" />
-                        Основные способности
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {hero.abilities.map((ability, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
-                            {ability}
-                          </Badge>
-                        ))}
+                    <p className="text-foreground leading-relaxed mb-4 text-base">
+                      {hero.description}
+                    </p>
+
+                    <div className="pt-4 border-t border-border/50">
+                      <div className="flex items-start gap-3">
+                        <Icon name="BookOpen" size={18} className="text-muted-foreground mt-1 flex-shrink-0" />
+                        <p className="text-muted-foreground text-sm leading-relaxed italic">
+                          {hero.lore}
+                        </p>
                       </div>
                     </div>
-                  )}
-
-                  <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Icon name="Info" size={14} />
-                      Нажми для деталей
-                    </span>
-                    {selectedHero?.id === hero.id && (
-                      <Icon name="ChevronUp" size={16} className="text-primary animate-pulse" />
-                    )}
                   </div>
                 </div>
               </Card>
             ))}
           </div>
 
-          <div className="text-center py-8">
-            <div className="inline-flex items-center gap-6 px-8 py-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50">
-              <div>
-                <div className="text-3xl font-bold text-primary">{heroes.length}</div>
-                <div className="text-xs text-muted-foreground">Героев</div>
-              </div>
-              <div className="h-12 w-px bg-border" />
-              <div>
-                <div className="text-3xl font-bold text-secondary">40+</div>
-                <div className="text-xs text-muted-foreground">Способностей</div>
-              </div>
-              <div className="h-12 w-px bg-border" />
-              <div>
-                <div className="text-3xl font-bold text-accent">3</div>
-                <div className="text-xs text-muted-foreground">Атрибута</div>
-              </div>
+          <section className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="p-8 text-center bg-primary/10 border-primary/30 backdrop-blur-sm">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Icon name="Users" size={32} className="text-primary" />
+                </div>
+                <div className="text-5xl font-bold mb-2 text-primary">{heroes.length}</div>
+                <div className="text-sm text-muted-foreground uppercase tracking-wider">Элитных героев</div>
+              </Card>
+
+              <Card className="p-8 text-center bg-accent/10 border-accent/30 backdrop-blur-sm">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center">
+                  <Icon name="Zap" size={32} className="text-accent" />
+                </div>
+                <div className="text-5xl font-bold mb-2 text-accent">∞</div>
+                <div className="text-sm text-muted-foreground uppercase tracking-wider">Уникальных стилей</div>
+              </Card>
+
+              <Card className="p-8 text-center bg-secondary/10 border-secondary/30 backdrop-blur-sm">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-secondary/20 flex items-center justify-center">
+                  <Icon name="Trophy" size={32} className="text-secondary" />
+                </div>
+                <div className="text-5xl font-bold mb-2 text-secondary">Pro</div>
+                <div className="text-sm text-muted-foreground uppercase tracking-wider">Уровень игры</div>
+              </Card>
             </div>
-          </div>
+          </section>
         </main>
 
-        <footer className="border-t border-border/50 backdrop-blur-sm bg-background/80 mt-12">
-          <div className="container mx-auto px-4 py-6 text-center text-muted-foreground text-sm">
-            <p>Dota 2 Heroes Database • Создано с помощью poehali.dev 🚀</p>
+        <footer className="border-t border-primary/20 backdrop-blur-xl bg-background/60 mt-20">
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center">
+              <p className="text-muted-foreground text-sm uppercase tracking-widest mb-2">
+                Dota 2 Elite Heroes Database
+              </p>
+              <p className="text-xs text-muted-foreground/60">
+                Создано на poehali.dev • 2024
+              </p>
+            </div>
           </div>
         </footer>
       </div>
