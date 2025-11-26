@@ -64,6 +64,56 @@ const heroes: Hero[] = [
     image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/cf82ba4d-457c-4abb-8649-1d179ca55ab7.jpg',
     description: 'Могучий воин стихий, способный сотрясать землю и создавать непроходимые барьеры, сокрушая всех врагов одним ударом.',
     abilities: ['Fissure', 'Enchant Totem', 'Aftershock', 'Echo Slam']
+  },
+  {
+    id: 6,
+    name: 'Phantom Assassin',
+    title: 'Призрачная Убийца',
+    role: 'Carry / Assassin',
+    attribute: 'Agility',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/10ce9bde-75c9-4452-9904-5b79bfbbec29.jpg',
+    description: 'Неуловимая убийца в синем одеянии, наносящая критические удары с невероятной скоростью. Её клинки приносят мгновенную смерть.',
+    abilities: ['Stifling Dagger', 'Phantom Strike', 'Blur', 'Coup de Grace']
+  },
+  {
+    id: 7,
+    name: 'Juggernaut',
+    title: 'Неудержимый Воин',
+    role: 'Carry / Pusher',
+    attribute: 'Agility',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/9cd7c266-edbe-46e1-aa21-358b36792c3e.jpg',
+    description: 'Неукротимый мечник в маске, способный стать неуязвимым и превратиться в вихрь клинков, разрубающий всё на своём пути.',
+    abilities: ['Blade Fury', 'Healing Ward', 'Blade Dance', 'Omnislash']
+  },
+  {
+    id: 8,
+    name: 'Sniper',
+    title: 'Меткий Стрелок',
+    role: 'Carry / Nuker',
+    attribute: 'Agility',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/e9bfcfe1-85c0-49be-bc3f-8c6c388c0c0c.jpg',
+    description: 'Дварф-снайпер с дальнобойным ружьём, способный поражать врагов с огромного расстояния, оставаясь вне зоны досягаемости.',
+    abilities: ['Shrapnel', 'Headshot', 'Take Aim', 'Assassinate']
+  },
+  {
+    id: 9,
+    name: 'Lina',
+    title: 'Повелительница Огня',
+    role: 'Nuker / Support',
+    attribute: 'Intelligence',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/957111b3-c8cd-483f-9295-69d7835c9bec.jpg',
+    description: 'Огненная волшебница с пылающими волосами, способная вызывать молнии и испепелять врагов лучами чистого пламени.',
+    abilities: ['Dragon Slave', 'Light Strike Array', 'Fiery Soul', 'Laguna Blade']
+  },
+  {
+    id: 10,
+    name: 'Axe',
+    title: 'Берсерк',
+    role: 'Initiator / Durable',
+    attribute: 'Strength',
+    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/2fc0be27-4a76-41f9-b6d6-e1f4ae6b4898.jpg',
+    description: 'Безжалостный берсерк с огромным топором, вызывающий врагов на бой и казнящий ослабленных противников одним ударом.',
+    abilities: ['Berserker\'s Call', 'Battle Hunger', 'Counter Helix', 'Culling Blade']
   }
 ];
 
@@ -185,7 +235,7 @@ const Index = () => {
               </div>
               <div className="h-12 w-px bg-border" />
               <div>
-                <div className="text-3xl font-bold text-secondary">10+</div>
+                <div className="text-3xl font-bold text-secondary">40+</div>
                 <div className="text-xs text-muted-foreground">Способностей</div>
               </div>
               <div className="h-12 w-px bg-border" />
