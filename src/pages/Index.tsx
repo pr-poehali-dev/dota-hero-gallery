@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
@@ -6,212 +7,260 @@ interface Hero {
   id: number;
   name: string;
   title: string;
-  role: string;
-  difficulty: string;
+  type: string;
   image: string;
+  stats: {
+    attack: number;
+    defense: number;
+    magic: number;
+  };
   description: string;
-  lore: string;
+  quote: string;
 }
 
 const heroes: Hero[] = [
   {
     id: 1,
-    name: 'Shadow Fiend',
-    title: 'Демон Душ',
-    role: 'Carry',
-    difficulty: 'Высокая',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/63f53cfe-d69b-464f-ba5d-a2e65c995055.jpg',
-    description: 'Могущественный демон, собирающий души павших врагов для увеличения своей силы.',
-    lore: 'Вырвавшись из преисподней, Shadow Fiend охотится за душами смертных. Каждая собранная душа усиливает его тёмную мощь.'
+    name: 'Drow Ranger',
+    title: 'Ледяная Стрелица',
+    type: 'Agility',
+    image: 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/drow_ranger.png',
+    stats: { attack: 9, defense: 4, magic: 6 },
+    description: 'Мастер дальнего боя, чьи ледяные стрелы замораживают и пронзают врагов на огромном расстоянии. Её точность и скорость делают её смертельной угрозой.',
+    quote: 'Тишина перед бурей - это я готовлю свой лук'
   },
   {
     id: 2,
-    name: 'Mirana',
-    title: 'Принцесса Луны',
-    role: 'Support / Carry',
-    difficulty: 'Средняя',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/820fda3d-1b71-4e28-9f35-f37b3c96c280.jpg',
-    description: 'Элегантная наездница на белом тигре, использующая силу лунного света в бою.',
-    lore: 'Mirana, принцесса Луны, вместе со своим верным спутником Sagan несёт правосудие под покровом ночи.'
+    name: 'Zeus',
+    title: 'Повелитель Грома',
+    type: 'Intelligence',
+    image: 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/zuus.png',
+    stats: { attack: 6, defense: 3, magic: 10 },
+    description: 'Бог грома, обрушивающий молнии на головы врагов. Нет места, где можно спрятаться от его божественного гнева и электрической ярости.',
+    quote: 'Моя молния найдёт тебя везде!'
   },
   {
     id: 3,
-    name: 'Templar Assassin',
-    title: 'Хранительница Тайн',
-    role: 'Carry',
-    difficulty: 'Средняя',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/694415ac-5480-48e5-9d76-6f532314c142.jpg',
-    description: 'Таинственная убийца, владеющая псионическими клинками и техниками сокрытия.',
-    lore: 'Lanaya защищает древние секреты Тайного Храма, безжалостно устраняя всех, кто угрожает её тайнам.'
+    name: 'Sven',
+    title: 'Странствующий Рыцарь',
+    type: 'Strength',
+    image: 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sven.png',
+    stats: { attack: 8, defense: 8, magic: 4 },
+    description: 'Могучий рыцарь с огромным мечом, способный превратиться в настоящего титана силы. Его удары сотрясают землю и сокрушают целые армии.',
+    quote: 'Честь и сила - вот мой путь'
   },
   {
     id: 4,
-    name: 'Storm Spirit',
-    title: 'Дух Бури',
-    role: 'Carry / Nuker',
-    difficulty: 'Высокая',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/d10972d1-b20e-4dcc-ad5f-94fac9817315.jpg',
-    description: 'Электрический элементаль, способный превращаться в молнию и перемещаться по полю боя.',
-    lore: 'Некогда смертный монах, теперь Storm Spirit - воплощение чистой электрической энергии с озорным характером.'
+    name: 'Queen of Pain',
+    title: 'Королева Боли',
+    type: 'Intelligence',
+    image: 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/queenofpain.png',
+    stats: { attack: 7, defense: 5, magic: 9 },
+    description: 'Демоническая красавица, черпающая силу из страданий врагов. Её крик способен разорвать реальность, а магия приносит мучительную смерть.',
+    quote: 'Страдание - это искусство, а я - мастер'
   },
   {
     id: 5,
-    name: 'Faceless Void',
-    title: 'Повелитель Времени',
-    role: 'Carry',
-    difficulty: 'Средняя',
-    image: 'https://cdn.poehali.dev/projects/8c7d7497-bd0c-4ce8-8efc-841a38a32ad5/files/86b7e273-888b-42fe-bf5b-756c155ab3ee.jpg',
-    description: 'Существо вне времени, способное останавливать время и манипулировать темпоральными потоками.',
-    lore: 'Darkterror путешествует между измерениями, исполняя свою загадочную миссию по сохранению временного континуума.'
+    name: 'Windranger',
+    title: 'Лесная Охотница',
+    type: 'Intelligence',
+    image: 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/windrunner.png',
+    stats: { attack: 7, defense: 6, magic: 7 },
+    description: 'Стремительная лучница, управляющая силой ветра. Её скорость стрельбы превосходит воображение, а связывающие стрелы пронзают всё.',
+    quote: 'Быстрее ветра, точнее молнии'
   }
 ];
 
-const difficultyColors = {
-  'Низкая': 'bg-secondary/20 text-secondary border-secondary/50',
-  'Средняя': 'bg-accent/20 text-accent border-accent/50',
-  'Высокая': 'bg-primary/20 text-primary border-primary/50'
+const typeColors = {
+  Strength: 'bg-primary/20 text-primary border-primary',
+  Agility: 'bg-accent/20 text-accent border-accent',
+  Intelligence: 'bg-secondary/20 text-secondary border-secondary'
+};
+
+const typeIcons = {
+  Strength: 'Sword',
+  Agility: 'Zap',
+  Intelligence: 'Sparkles'
 };
 
 const Index = () => {
+  const [activeHero, setActiveHero] = useState<number | null>(null);
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
-      <div className="fixed inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40 pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,103,51,0.1),transparent_50%)]" />
       
-      <div className="relative z-10">
-        <header className="border-b border-primary/20 backdrop-blur-xl bg-background/60">
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex flex-col items-center text-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-accent">
-                  <Icon name="Swords" size={32} className="text-white" />
+      <div className="relative">
+        <header className="border-b-2 border-primary/30 bg-background/90 backdrop-blur-lg sticky top-0 z-50 shadow-xl">
+          <div className="container mx-auto px-6 py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-primary blur-xl opacity-50 animate-pulse" />
+                  <div className="relative w-14 h-14 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                    <Icon name="Crown" size={28} className="text-white" />
+                  </div>
                 </div>
                 <div>
-                  <h1 className="text-5xl font-bold tracking-wider uppercase bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                    DOTA 2
-                  </h1>
-                  <p className="text-muted-foreground text-sm uppercase tracking-widest">Элитные герои арены</p>
+                  <h1 className="text-4xl font-extrabold text-foreground">DOTA 2 ARENA</h1>
+                  <p className="text-muted-foreground font-semibold">ТОП-5 ГЕРОЕВ НЕДЕЛИ</p>
                 </div>
               </div>
+              <Badge className="bg-primary text-white px-4 py-2 text-sm font-bold">
+                <Icon name="TrendingUp" size={16} className="mr-2" />
+                META 2024
+              </Badge>
             </div>
           </div>
         </header>
 
-        <main className="container mx-auto px-4 py-16">
-          <section className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-6xl font-bold mb-6 uppercase tracking-tight">
-              <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                Легендарные Бойцы
+        <main className="container mx-auto px-6 py-12">
+          <section className="text-center mb-16 max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6">
+              <Icon name="Star" size={18} className="text-primary" />
+              <span className="text-sm font-bold text-primary uppercase tracking-wider">Избранные герои</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+              Доминируй на поле боя с
+              <span className="block mt-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                Легендарными героями
               </span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              Пять величайших героев Dota 2, каждый из которых обладает уникальными способностями 
-              и может изменить ход любой битвы. Познакомьтесь с их историями и силой.
+            <p className="text-muted-foreground text-xl leading-relaxed">
+              Самые мощные и популярные герои текущей меты. Изучи их сильные стороны и начни побеждать!
             </p>
           </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
-            {heroes.map((hero, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {heroes.map((hero) => (
               <Card
                 key={hero.id}
-                className={`group relative overflow-hidden transition-all duration-500 hover:scale-[1.02] border-2 bg-card/40 backdrop-blur-sm ${
-                  index === 0 ? 'lg:col-span-2' : ''
-                }`}
-                style={{
-                  borderColor: index % 3 === 0 ? 'hsl(var(--primary))' : index % 3 === 1 ? 'hsl(var(--accent))' : 'hsl(var(--secondary))'
-                }}
+                className="group relative overflow-hidden transition-all duration-300 hover:scale-105 border-2 border-muted hover:border-primary cursor-pointer bg-card"
+                onMouseEnter={() => setActiveHero(hero.id)}
+                onMouseLeave={() => setActiveHero(null)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className={`grid ${index === 0 ? 'lg:grid-cols-2' : 'grid-cols-1'} gap-0`}>
-                  <div className={`relative ${index === 0 ? 'h-96' : 'h-72'} overflow-hidden`}>
+                <div className="absolute top-4 left-4 z-20">
+                  <div className="w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center border-2 border-primary font-bold text-primary">
+                    #{hero.id}
+                  </div>
+                </div>
+
+                <div className="absolute top-4 right-4 z-20">
+                  <Badge 
+                    className={`${typeColors[hero.type as keyof typeof typeColors]} border-2 font-bold backdrop-blur-sm`}
+                  >
+                    <Icon name={typeIcons[hero.type as keyof typeof typeIcons]} size={14} className="mr-1" />
+                    {hero.type}
+                  </Badge>
+                </div>
+
+                <div className="relative h-72 overflow-hidden bg-gradient-to-br from-muted to-background">
+                  <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={hero.image}
                       alt={hero.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                      style={{ filter: 'drop-shadow(0 0 30px rgba(255,103,51,0.3))' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-                    
-                    <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                      <Badge className="bg-background/90 backdrop-blur-sm border-primary/50 text-primary font-bold uppercase tracking-wide">
-                        #{hero.id}
-                      </Badge>
-                      <Badge 
-                        variant="outline" 
-                        className={`${difficultyColors[hero.difficulty as keyof typeof difficultyColors]} backdrop-blur-sm font-semibold`}
-                      >
-                        <Icon name="TrendingUp" size={14} className="mr-1" />
-                        {hero.difficulty}
-                      </Badge>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-1">{hero.name}</h3>
+                  <p className="text-primary text-sm font-semibold mb-4 italic">"{hero.title}"</p>
+
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <Icon name="Sword" size={16} className="text-primary" />
+                      </div>
+                      <div className="text-xl font-bold">{hero.stats.attack}</div>
+                      <div className="text-xs text-muted-foreground">Атака</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <Icon name="Shield" size={16} className="text-accent" />
+                      </div>
+                      <div className="text-xl font-bold">{hero.stats.defense}</div>
+                      <div className="text-xs text-muted-foreground">Защита</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <Icon name="Sparkles" size={16} className="text-secondary" />
+                      </div>
+                      <div className="text-xl font-bold">{hero.stats.magic}</div>
+                      <div className="text-xs text-muted-foreground">Магия</div>
                     </div>
                   </div>
 
-                  <div className="p-8 flex flex-col justify-center">
-                    <Badge variant="outline" className="w-fit mb-3 border-secondary text-secondary uppercase tracking-wider">
-                      <Icon name="Shield" size={12} className="mr-1" />
-                      {hero.role}
-                    </Badge>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                    {hero.description}
+                  </p>
 
-                    <h3 className="text-4xl font-bold mb-2 uppercase tracking-tight">{hero.name}</h3>
-                    <p className="text-accent text-lg mb-4 font-semibold italic">"{hero.title}"</p>
-
-                    <p className="text-foreground leading-relaxed mb-4 text-base">
-                      {hero.description}
-                    </p>
-
-                    <div className="pt-4 border-t border-border/50">
-                      <div className="flex items-start gap-3">
-                        <Icon name="BookOpen" size={18} className="text-muted-foreground mt-1 flex-shrink-0" />
-                        <p className="text-muted-foreground text-sm leading-relaxed italic">
-                          {hero.lore}
+                  {activeHero === hero.id && (
+                    <div className="pt-4 border-t border-border animate-in fade-in slide-in-from-bottom-2 duration-300">
+                      <div className="flex items-start gap-2 bg-muted/50 p-3 rounded-lg">
+                        <Icon name="MessageCircle" size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                        <p className="text-xs text-foreground italic leading-relaxed">
+                          "{hero.quote}"
                         </p>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </Card>
             ))}
           </div>
 
-          <section className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="p-8 text-center bg-primary/10 border-primary/30 backdrop-blur-sm">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Icon name="Users" size={32} className="text-primary" />
+          <section className="max-w-6xl mx-auto mb-16">
+            <Card className="overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-card to-muted">
+              <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
+                <div className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/20 flex items-center justify-center">
+                    <Icon name="Users" size={36} className="text-primary" />
+                  </div>
+                  <div className="text-5xl font-extrabold text-primary mb-2">{heroes.length}</div>
+                  <div className="text-sm text-muted-foreground font-semibold uppercase tracking-wide">Топ героев</div>
                 </div>
-                <div className="text-5xl font-bold mb-2 text-primary">{heroes.length}</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Элитных героев</div>
-              </Card>
 
-              <Card className="p-8 text-center bg-accent/10 border-accent/30 backdrop-blur-sm">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center">
-                  <Icon name="Zap" size={32} className="text-accent" />
+                <div className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/20 flex items-center justify-center">
+                    <Icon name="Flame" size={36} className="text-accent" />
+                  </div>
+                  <div className="text-5xl font-extrabold text-accent mb-2">100%</div>
+                  <div className="text-sm text-muted-foreground font-semibold uppercase tracking-wide">Винрейт</div>
                 </div>
-                <div className="text-5xl font-bold mb-2 text-accent">∞</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Уникальных стилей</div>
-              </Card>
 
-              <Card className="p-8 text-center bg-secondary/10 border-secondary/30 backdrop-blur-sm">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-secondary/20 flex items-center justify-center">
-                  <Icon name="Trophy" size={32} className="text-secondary" />
+                <div className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-secondary/20 flex items-center justify-center">
+                    <Icon name="Trophy" size={36} className="text-secondary" />
+                  </div>
+                  <div className="text-5xl font-extrabold text-secondary mb-2">Pro</div>
+                  <div className="text-sm text-muted-foreground font-semibold uppercase tracking-wide">Уровень</div>
                 </div>
-                <div className="text-5xl font-bold mb-2 text-secondary">Pro</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Уровень игры</div>
-              </Card>
-            </div>
+
+                <div className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/20 flex items-center justify-center">
+                    <Icon name="Target" size={36} className="text-primary" />
+                  </div>
+                  <div className="text-5xl font-extrabold text-primary mb-2">Meta</div>
+                  <div className="text-sm text-muted-foreground font-semibold uppercase tracking-wide">Актуальность</div>
+                </div>
+              </div>
+            </Card>
           </section>
         </main>
 
-        <footer className="border-t border-primary/20 backdrop-blur-xl bg-background/60 mt-20">
-          <div className="container mx-auto px-4 py-8">
-            <div className="text-center">
-              <p className="text-muted-foreground text-sm uppercase tracking-widest mb-2">
-                Dota 2 Elite Heroes Database
-              </p>
-              <p className="text-xs text-muted-foreground/60">
-                Создано на poehali.dev • 2024
-              </p>
+        <footer className="border-t-2 border-primary/30 bg-background/90 backdrop-blur-lg">
+          <div className="container mx-auto px-6 py-8 text-center">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Icon name="Gamepad2" size={24} className="text-primary" />
+              <span className="text-lg font-bold">DOTA 2 ARENA</span>
             </div>
+            <p className="text-muted-foreground text-sm">
+              Создано на платформе poehali.dev 🚀 • 2024
+            </p>
           </div>
         </footer>
       </div>
